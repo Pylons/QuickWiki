@@ -1,45 +1,52 @@
+import logging
+
 from quickwiki.lib.base import *
-    
+from quickwiki.model import Session, Page
+
+log = logging.getLogger(__name__)
+
 class PageController(BaseController):
-
-    def __before__(self):
-        model.session_context.current.clear()
-
+    
     def index(self, title):
-        page = model.Page.get_by(title=title)
-        if page: 
+        page_q = Session.query(Page)
+        page = page_q.filter_by(title=title).first()
+        if page:
             c.content = page.get_wiki_content()
-            return render_response('/page.myt')
+            return render('/page.mako')
         elif model.wikiwords.match(title):
-            return render_response('/new_page.myt')
+            return render('/new_page.mako')
         abort(404)
 
     def edit(self, title):
-        page = model.Page.get_by(title=title)
+        page_q = Session.query(Page)
+        page = page_q.filter_by(title=title).first()
         if page:
             c.content = page.content
-        return render_response('/edit.myt')
-    
+        return render('/edit.mako')
+        
     def save(self, title):
-        page = model.Page.get_by(title=title)
+        page_q = Session.query(Page)
+        page = page_q.filter_by(title=title).first()
         if not page:
-            page = model.Page()
+            page = Page()
             page.title = title
-        page.content = request.params['content']
+        page.content = request.params.get('content','')
         c.title = page.title
         c.content = page.get_wiki_content()
         c.message = 'Successfully saved'
-        page.flush()
-        return render_response('/page.myt')
+        Session.save(page)
+        Session.commit()
+        return render('/page.mako')
 
     def list(self):
-        c.titles = [page.title for page in model.Page.select()]
-        return render_response('/titles.myt')
+        c.titles = [page.title for page in Session.query(Page).all()]
+        return render('/list.mako')
 
     def delete(self):
+        page_q = Session.query(Page)
         title = request.params['id'][5:]
-        page = model.Page.get_by(title=title)
-        page.delete()
-        page.flush()
-        c.titles = model.Page.select()
-        return render_response('/list.myt', fragment=True)
+        page = page_q.filter_by(title=title).one()
+        Session.delete(page)
+        Session.commit()
+        c.titles = page_q.all()
+        return render('/list-titles.mako')

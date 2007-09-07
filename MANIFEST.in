@@ -1,0 +1,2 @@
+recursive-include quickwiki/public *
+recursive-include quickwiki/templates *

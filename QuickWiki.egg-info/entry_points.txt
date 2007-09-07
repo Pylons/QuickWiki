@@ -1,6 +1,6 @@
 
     [paste.app_factory]
-    main=quickwiki:make_app
+    main=quickwiki.config.middleware:make_app
     [paste.app_install]
     main=paste.script.appinstall:Installer
     
