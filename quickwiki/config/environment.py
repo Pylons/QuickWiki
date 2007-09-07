@@ -21,9 +21,9 @@ def load_environment(global_conf, app_conf):
     config.init_app(global_conf, app_conf, package='quickwiki',
                     template_engine='mako', paths=paths)
 
+    config['routes.map'] = make_map()
     config['pylons.g'] = app_globals.Globals()
     config['pylons.h'] = quickwiki.lib.helpers
-    config['routes.map'] = make_map()
 
     # Customize templating options via this variable
     tmpl_options = config['buffet.template_options']
