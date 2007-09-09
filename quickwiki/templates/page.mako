@@ -1,4 +1,4 @@
-<%inherit file="base.mako"/>\
+<%inherit file="base.mako"/>
 
 <h1 class="main">${c.title}</h1>
 % if c.message:

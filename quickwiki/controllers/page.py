@@ -1,12 +1,12 @@
 import logging
 
 from quickwiki.lib.base import *
-from quickwiki.model import Session, Page
+from quickwiki.model import Page
 
 log = logging.getLogger(__name__)
 
 class PageController(BaseController):
-    
+
     def index(self, title):
         page_q = Session.query(Page)
         page = page_q.filter_by(title=title).first()
@@ -23,7 +23,7 @@ class PageController(BaseController):
         if page:
             c.content = page.content
         return render('/edit.mako')
-        
+
     def save(self, title):
         page_q = Session.query(Page)
         page = page_q.filter_by(title=title).first()

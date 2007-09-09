@@ -9,7 +9,9 @@ import quickwiki.lib.helpers
 from quickwiki.config.routing import make_map
 
 def load_environment(global_conf, app_conf):
-    """Configure the Pylons environment via the ``pylons.config`` object"""
+    """Configure the Pylons environment via the ``pylons.config``
+    object
+    """
     # Pylons paths
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     paths = dict(root=root,
@@ -28,6 +30,7 @@ def load_environment(global_conf, app_conf):
     # Customize templating options via this variable
     tmpl_options = config['buffet.template_options']
 
-    # CONFIGURATION OPTIONS HERE (note: all config options will override any
-    # Pylons config options)
-    config['pylons.g'].sa_engine = engine_from_config(config, 'sqlalchemy.default.')
+    # CONFIGURATION OPTIONS HERE (note: all config options will override
+    # any Pylons config options)
+    config['pylons.g'].sa_engine = engine_from_config(config,
+                                                      'sqlalchemy.default.')

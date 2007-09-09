@@ -16,16 +16,16 @@ def setup_config(command, filename, section, vars):
     # Populate the DB on 'paster setup-app'
     import quickwiki.model as model
 
-    print "Setting up database connectivity..."
+    log.info("Setting up database connectivity...")
     engine = config['pylons.g'].sa_engine
-    print "Creating tables..."
+    log.info("Creating tables...")
     model.metadata.create_all(bind=engine)
-    print "Successfully set up."
+    log.info("Successfully set up.")
 
-    print "Adding front page data..."
+    log.info("Adding front page data...")
     page = model.Page()
     page.title = 'FrontPage'
     page.content = 'Welcome to the QuickWiki front page.'
     model.Session.save(page)
     model.Session.commit()
-    print "Successfully set up."
+    log.info("Successfully set up.")
