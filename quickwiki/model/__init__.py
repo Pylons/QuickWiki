@@ -18,11 +18,11 @@ Session = scoped_session(sessionmaker(autoflush=True, transactional=True,
 # table names, you'll need a metadata for each database.
 metadata = MetaData()
 
-wikiwords = re.compile(r"\b([A-Z]\w+[A-Z]+\w+)")
+wikiwords = re.compile(r"\b([A-Z]\w+[A-Z]+\w+)", re.UNICODE)
 
 pages_table = Table('pages', metadata,
-    Column('title', types.String(40), primary_key=True),
-    Column('content', types.String(), default='')
+    Column('title', types.Unicode(40), primary_key=True),
+    Column('content', types.Unicode(), default='')
 )
 
 class Page(object):

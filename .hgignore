@@ -1,0 +1,13 @@
+syntax:glob
+.svn
+.coverage
+*.pyc
+*.egg-link
+ez_setup
+container_file
+container_dbm*
+*~
+build/
+dist/
+easy-install.pth
+site.py
