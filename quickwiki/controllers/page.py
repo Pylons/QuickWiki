@@ -30,7 +30,7 @@ class PageController(BaseController):
         if not page:
             page = Page()
             page.title = title
-        page.content = request.params.get('content','')
+        page.content = request.POST.get('content','')
         c.title = page.title
         c.content = page.get_wiki_content()
         c.message = 'Successfully saved'
@@ -44,7 +44,7 @@ class PageController(BaseController):
 
     def delete(self):
         page_q = Session.query(Page)
-        title = request.params['id'][5:]
+        title = request.POST['id']
         page = page_q.filter_by(title=title).one()
         Session.delete(page)
         Session.commit()
