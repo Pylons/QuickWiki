@@ -12,7 +12,7 @@ setup(
     #author="",
     #author_email="",
     url="http://wiki.pylonshq.com/display/pylonsdocs/QuickWiki+Tutorial",
-    install_requires=["Pylons>=0.9.6", "docutils==0.4", "SQLAlchemy>=0.4.0beta5"],
+    install_requires=["Pylons>=0.9.6", "docutils==0.4", "SQLAlchemy>=0.4.0"],
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,
     test_suite='nose.collector',
