@@ -34,7 +34,7 @@ class PageController(BaseController):
         c.title = page.title
         c.content = page.get_wiki_content()
         c.message = 'Successfully saved'
-        Session.save(page)
+        Session.save_or_update(page)
         Session.commit()
         return render('/page.mako')
 
