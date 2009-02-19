@@ -36,10 +36,10 @@ def load_environment(global_conf, app_conf):
         module_directory=os.path.join(app_conf['cache_dir'], 'templates'),
         input_encoding='utf-8', default_filters=['escape'],
         imports=['from webhelpers.html import escape'])
-    
+
     # Setup SQLAlchemy database engine
     engine = engine_from_config(config, 'sqlalchemy.')
     init_model(engine)
-    
+
     # CONFIGURATION OPTIONS HERE (note: all config options will override
     # any Pylons config options)

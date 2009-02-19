@@ -17,13 +17,11 @@ def setup_app(command, conf, vars):
     log.info("Creating tables...")
     meta.metadata.create_all(checkfirst=True)
     log.info("Successfully set up.")
-    
+
     import quickwiki.model as model
     log.info("Adding front page data...")
-    page = model.Page(
-        title = u'FrontPage',
-        content = u'Welcome to the QuickWiki front page.'
-        )
+    page = model.Page(title=u'FrontPage',
+                      content=u'Welcome to the QuickWiki front page.')
     meta.Session.add(page)
     meta.Session.commit()
     log.info("Successfully set up.")

@@ -11,8 +11,8 @@ from pylons import url
 from quickwiki.lib.helpers import link_to
 from quickwiki.model import meta
 
-
 log = logging.getLogger(__name__)
+
 SAFE_DOCUTILS = {'file_insertion_enabled': False, 'raw_enabled': False}
 wikiwords = re.compile(r"\b([A-Z]\w+[A-Z]+\w+)", re.UNICODE)
 
@@ -28,6 +28,7 @@ pages_table = sa.Table('pages', meta.metadata,
 )
 
 class Page(object):
+
     def __init__(self, title, content=None):
         self.title = title
         self.content = content
@@ -59,7 +60,7 @@ class Page(object):
         return self.title
 
     __str__ = __unicode__
-    
+
     def __repr__(self):
         return "<Page('%s', '%s')>" % (self.title, self.content)
 

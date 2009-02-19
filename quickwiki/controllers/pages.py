@@ -8,12 +8,12 @@ from pylons.decorators.secure import authenticate_form
 from quickwiki.lib.base import BaseController, render
 from quickwiki.lib.helpers import flash
 from quickwiki.model import Page, wikiwords
-from quickwiki.model.meta import Session as Session
+from quickwiki.model.meta import Session
 
 log = logging.getLogger(__name__)
 
 class PagesController(BaseController):
-    
+
     def __init__(self):
         self.page_q = Session.query(Page)
 
@@ -33,7 +33,7 @@ class PagesController(BaseController):
         if not page:
             page = Page(title)
         # In a real application, you should validate and sanitize
-        # submitted data throughly! escape is a minimal example here.
+        # submitted data throughly! escape is a minimal example here
         page.content = escape(request.POST.getone('content'))
         Session.add(page)
         Session.commit()
