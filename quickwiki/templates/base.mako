@@ -31,7 +31,7 @@
 ## Don't show links that are redundant for particular pages
 <%def name="footer(action)">\
   Return to the ${h.link_to('FrontPage', url('home'))}
-  % if action == "index":
+  % if action == 'index':
     <% return '' %>
   % endif
   % if action != 'edit':

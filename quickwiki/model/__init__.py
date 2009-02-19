@@ -14,7 +14,7 @@ from quickwiki.model import meta
 log = logging.getLogger(__name__)
 
 SAFE_DOCUTILS = {'file_insertion_enabled': False, 'raw_enabled': False}
-wikiwords = re.compile(r"\b([A-Z]\w+[A-Z]+\w+)", re.UNICODE)
+wikiwords = re.compile(r'\b([A-Z]\w+[A-Z]+\w+)', re.UNICODE)
 
 def init_model(engine):
     """Call me before using any of the tables or classes in the model"""
@@ -35,18 +35,18 @@ class Page(object):
 
     @orm.validates('title')
     def validate_title(self, key, title):
-        """Assure that page titles are wikiwords and valid length."""
+        """Assure that page titles are wikiwords and valid length"""
         if len(title) > 40:
-            raise ValueError("Page title must be 40 characters or fewer")
-        if wikiwords.match(title) is None:
-            log.warning("%s: invalid title (%s)" % (self.__class__.__name__,
+            raise ValueError('Page title must be 40 characters or fewer')
+        if not wikiwords.match(title):
+            log.warning('%s: invalid title (%s)' % (self.__class__.__name__,
                                                     title))
-            raise ValueError("Page title must be a wikiword (CamelCase)")
+            raise ValueError('Page title must be a wikiword (CamelCase)')
         return title
 
     def get_wiki_content(self):
         """Convert reStructuredText content to HTML for display, and
-        create links for WikiWords.
+        create links for WikiWords
         """
         content = publish_parts(self.content, writer_name='html',
                                 settings_overrides=SAFE_DOCUTILS)['html_body']
