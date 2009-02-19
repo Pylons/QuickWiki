@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 
 class PagesController(BaseController):
 
-    def __init__(self):
+    def __before__(self):
         self.page_q = Session.query(Page)
 
     def index(self):
