@@ -11,16 +11,29 @@ def make_map():
     """Create, configure and return the routes Mapper"""
     map = Mapper(directory=config['pylons.paths']['controllers'],
                  always_scan=config['debug'])
-
+    map.minimization = False
+    
     # The ErrorController route (handles 404/500 error pages); it should
     # likely stay at the top, ensuring it can always be resolved
-    map.connect('error/:action/:id', controller='error')
+    map.connect('/error/{action}', controller='error')
+    map.connect('/error/{action}/{id}', controller='error')
 
     # CUSTOM ROUTES HERE
 
-    map.connect(':controller/:action/:title', controller='page',
-                action='index', title='FrontPage')
-    map.connect(':title', controller='page', action='index', title='FrontPage')
-    map.connect('*url', controller='template', action='view')
+    map.connect('home', '/', controller='pages', action='show',
+                title='FrontPage')
+    map.connect('pages', '/pages', controller='pages', action='index')
+    map.connect('show_page', '/pages/show/{title}', controller='pages',
+                action='show')
+    map.connect('edit_page', '/pages/edit/{title}', controller='pages',
+                action='edit')
+    map.connect('save_page', '/pages/save/{title}', controller='pages',
+                action='save', conditions=dict(method='POST'))
+    map.connect('delete_page', '/pages/delete/{title}', controller='pages',
+                action='delete')
+
+    # A bonus example - the specified defaults allow visiting
+    # example.com/FrontPage to view the page titled 'FrontPage':
+    map.connect('/{title}', controller='pages', action='show')
 
     return map

@@ -1,31 +1,28 @@
 """Setup the QuickWiki application"""
 import logging
 
-from paste.deploy import appconfig
-from pylons import config
-
 from quickwiki.config.environment import load_environment
 
 log = logging.getLogger(__name__)
 
-def setup_config(command, filename, section, vars):
+def setup_app(command, conf, vars):
     """Place any commands to setup quickwiki here"""
-    conf = appconfig('config:' + filename)
     load_environment(conf.global_conf, conf.local_conf)
-    
-    # Populate the DB on 'paster setup-app'
-    import quickwiki.model as model
 
-    log.info("Setting up database connectivity...")
-    engine = config['pylons.g'].sa_engine
+    # Load the models
+    from quickwiki.model import meta
+    meta.metadata.bind = meta.engine
+
+    # Create the tables if they aren't there already
     log.info("Creating tables...")
-    model.metadata.create_all(bind=engine)
+    meta.metadata.create_all(checkfirst=True)
     log.info("Successfully set up.")
-
+    
+    import quickwiki.model as model
     log.info("Adding front page data...")
     page = model.Page()
-    page.title = 'FrontPage'
-    page.content = 'Welcome to the QuickWiki front page.'
-    model.Session.save(page)
-    model.Session.commit()
+    page.title = u'FrontPage'
+    page.content = u'Welcome to the QuickWiki front page.'
+    meta.Session.add(page)
+    meta.Session.commit()
     log.info("Successfully set up.")
