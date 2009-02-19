@@ -9,7 +9,8 @@ def setup_app(command, conf, vars):
     """Place any commands to setup quickwiki here"""
     load_environment(conf.global_conf, conf.local_conf)
 
-    # Load the models
+    # import model now that the environment is loaded
+    from quickwiki import model
     from quickwiki.model import meta
     meta.metadata.bind = meta.engine
 
@@ -18,7 +19,6 @@ def setup_app(command, conf, vars):
     meta.metadata.create_all(checkfirst=True)
     log.info("Successfully set up.")
 
-    import quickwiki.model as model
     log.info("Adding front page data...")
     page = model.Page(title=u'FrontPage',
                       content=u'Welcome to the QuickWiki front page.')
