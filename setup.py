@@ -9,8 +9,8 @@ setup(
     name='QuickWiki',
     version='0.1.6',
     description='QuickWiki - Pylons 0.9.7 Tutorial application',
-    #author='',
-    #author_email='',
+    author='',
+    author_email='',
     url='http://docs.pylonshq.com/tutorials/quickwiki_tutorial.html',
     install_requires=[
         "Pylons>=0.9.7rc6",
@@ -22,9 +22,9 @@ setup(
     include_package_data=True,
     test_suite='nose.collector',
     package_data={'quickwiki': ['i18n/*/LC_MESSAGES/*.mo']},
-    #message_extractors = {'quickwiki': [
+    #message_extractors={'quickwiki': [
     #        ('**.py', 'python', None),
-    #        ('templates/**.mako', 'mako', None),
+    #        ('templates/**.mako', 'mako', {'input_encoding': 'utf-8'}),
     #        ('public/**', 'ignore', None)]},
     zip_safe=False,
     paster_plugins=['PasteScript', 'Pylons'],
