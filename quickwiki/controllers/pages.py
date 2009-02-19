@@ -31,11 +31,10 @@ class PagesController(BaseController):
     def save(self, title):
         page = self.page_q.filter_by(title=title).first()
         if not page:
-            page = Page()
-            page.title = title
+            page = Page(title)
         # In a real application, you should validate and sanitize
         # submitted data throughly! escape is a minimal example here.
-        page.content = escape(request.POST.get('content', ''))
+        page.content = escape(request.POST.getone('content'))
         DBSession.add(page)
         DBSession.commit()
         flash('Successfully saved %s!' % title)
@@ -54,6 +53,5 @@ class PagesController(BaseController):
         page = self.page_q.filter_by(title=title).one()
         DBSession.delete(page)
         DBSession.commit()
-        c.titles = self.page_q.all()
         flash('Deleted %s.' % title)
         redirect_to('pages')

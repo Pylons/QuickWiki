@@ -20,9 +20,10 @@ def setup_app(command, conf, vars):
     
     import quickwiki.model as model
     log.info("Adding front page data...")
-    page = model.Page()
-    page.title = u'FrontPage'
-    page.content = u'Welcome to the QuickWiki front page.'
+    page = model.Page(
+        title = u'FrontPage',
+        content = u'Welcome to the QuickWiki front page.'
+        )
     meta.Session.add(page)
     meta.Session.commit()
     log.info("Successfully set up.")

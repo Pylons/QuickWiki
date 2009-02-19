@@ -8,12 +8,12 @@ import sqlalchemy as sa
 from sqlalchemy import orm
 
 from pylons import url
+from quickwiki.lib.helpers import link_to
 from quickwiki.model import meta
-import quickwiki.lib.helpers as h
 
 
-docutils_safety = {'file_insertion_enabled': False, 'raw_enabled': False}
 log = logging.getLogger(__name__)
+SAFE_DOCUTILS = {'file_insertion_enabled': False, 'raw_enabled': False}
 wikiwords = re.compile(r"\b([A-Z]\w+[A-Z]+\w+)", re.UNICODE)
 
 def init_model(engine):
@@ -30,14 +30,15 @@ pages_table = sa.Table('pages', meta.metadata,
 )
 
 class Page(object):
-    content = None
-
-    def __str__(self):
-        return self.title
+    def __init__(self, title, content=None):
+        self.title = title
+        self.content = content
 
     @orm.validates('title')
     def validate_title(self, key, title):
-        """Assure that page titles are wikiwords"""
+        """Assure that page titles are wikiwords and valid length."""
+        if len(title) > 40:
+            raise ValueError("Page title must be 40 characters or fewer")
         if wikiwords.match(title) is None:
             log.warning("%s: invalid title (%s)" % (self.__class__.__name__,
                                                     title))
@@ -49,11 +50,19 @@ class Page(object):
         create links for WikiWords.
         """
         content = publish_parts(self.content, writer_name='html',
-                                settings_overrides=docutils_safety)['html_body']
+                                settings_overrides=SAFE_DOCUTILS)['html_body']
         titles = sets.Set(wikiwords.findall(content))
         for title in titles:
             title_url = url(controller='pages', action='show', title=title)
-            content = content.replace(title, h.link_to(title, title_url))
+            content = content.replace(title, link_to(title, title_url))
         return content
+
+    def __unicode__(self):
+        return self.title
+
+    __str__ = __unicode__
+    
+    def __repr__(self):
+        return "<Page('%s', '%s')>" % (self.title, self.content)
 
 orm.mapper(Page, pages_table)
