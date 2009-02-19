@@ -11,7 +11,7 @@ setup(
     description='QuickWiki - Pylons 0.9.7 Tutorial application',
     author='',
     author_email='',
-    url='http://docs.pylonshq.com/tutorials/quickwiki_tutorial.html',
+    url='http://pylonshq.com/docs/en/0.9.7/tutorials/quickwiki_tutorial/',
     install_requires=[
         "Pylons>=0.9.7rc6",
         "SQLAlchemy>=0.5",
