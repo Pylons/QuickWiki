@@ -5,7 +5,8 @@
 <ul id="titles">
   % for title in c.titles:
   <li>
-    ${title} [${h.link_to('visit', url('show_page', title=title))} - ${h.link_to('delete', url('delete_page', title=title))}]
+    ${title} [${h.link_to('visit', url('show_page', title=title))} -
+    ${h.link_to('delete', url('delete_page', title=title))}]
   </li>
   % endfor
 </ul>
