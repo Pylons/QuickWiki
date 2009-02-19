@@ -13,8 +13,8 @@ setup(
     #author_email='',
     url='http://docs.pylonshq.com/tutorials/quickwiki_tutorial.html',
     install_requires=[
-        "Pylons>=0.9.7",
-        "SQLAlchemy==0.5.0rc4",
+        "Pylons>=0.9.7rc6",
+        "SQLAlchemy>=0.5",
         "docutils==0.4"
     ],
     setup_requires=["PasteScript>=1.6.3"],

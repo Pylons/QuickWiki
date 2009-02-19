@@ -8,14 +8,14 @@ from pylons.decorators.secure import authenticate_form
 from quickwiki.lib.base import BaseController, render
 from quickwiki.lib.helpers import flash
 from quickwiki.model import Page, wikiwords
-from quickwiki.model.meta import Session as DBSession
+from quickwiki.model.meta import Session as Session
 
 log = logging.getLogger(__name__)
 
 class PagesController(BaseController):
     
     def __init__(self):
-        self.page_q = DBSession.query(Page)
+        self.page_q = Session.query(Page)
 
     def index(self):
         c.titles = [page.title for page in self.page_q.all()]
@@ -35,8 +35,8 @@ class PagesController(BaseController):
         # In a real application, you should validate and sanitize
         # submitted data throughly! escape is a minimal example here.
         page.content = escape(request.POST.getone('content'))
-        DBSession.add(page)
-        DBSession.commit()
+        Session.add(page)
+        Session.commit()
         flash('Successfully saved %s!' % title)
         redirect_to('show_page', title=title)
 
@@ -51,7 +51,7 @@ class PagesController(BaseController):
 
     def delete(self, title):
         page = self.page_q.filter_by(title=title).one()
-        DBSession.delete(page)
-        DBSession.commit()
+        Session.delete(page)
+        Session.commit()
         flash('Deleted %s.' % title)
         redirect_to('pages')

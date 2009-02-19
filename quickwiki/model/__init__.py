@@ -1,11 +1,11 @@
 """The application's model objects"""
+import sqlalchemy as sa
+from sqlalchemy import orm
+
 import logging
 import re
 import sets
 from docutils.core import publish_parts
-
-import sqlalchemy as sa
-from sqlalchemy import orm
 
 from pylons import url
 from quickwiki.lib.helpers import link_to
@@ -18,10 +18,8 @@ wikiwords = re.compile(r"\b([A-Z]\w+[A-Z]+\w+)", re.UNICODE)
 
 def init_model(engine):
     """Call me before using any of the tables or classes in the model"""
-    sm = orm.sessionmaker(bind=engine)
-
+    meta.Session.configure(bind=engine)
     meta.engine = engine
-    meta.Session = orm.scoped_session(sm)
 
 
 pages_table = sa.Table('pages', meta.metadata,
