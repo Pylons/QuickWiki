@@ -32,7 +32,7 @@
 <%def name="footer(action)">\
   Return to the ${h.link_to('FrontPage', url('home'))}
   % if action == 'index':
-    <% return '' %>
+    <% return %>
   % endif
   % if action != 'edit':
     | ${h.link_to('Edit ' + c.title, url('edit_page', title=c.title))}
