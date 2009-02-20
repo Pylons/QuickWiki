@@ -17,9 +17,14 @@ class PagesController(BaseController):
     def __before__(self):
         self.page_q = Session.query(Page)
 
-    def index(self):
-        c.titles = [page.title for page in self.page_q.all()]
-        return render('/pages/index.mako')
+    def show(self, title):
+        page = self.page_q.filter_by(title=title).first()
+        if page:
+            c.content = page.get_wiki_content()
+            return render('/pages/show.mako')
+        elif wikiwords.match(title):
+            return render('/pages/new.mako')
+        abort(404)
 
     def edit(self, title):
         page = self.page_q.filter_by(title=title).first()
@@ -40,14 +45,9 @@ class PagesController(BaseController):
         flash('Successfully saved %s!' % title)
         redirect_to('show_page', title=title)
 
-    def show(self, title):
-        page = self.page_q.filter_by(title=title).first()
-        if page:
-            c.content = page.get_wiki_content()
-            return render('/pages/show.mako')
-        elif wikiwords.match(title):
-            return render('/pages/new.mako')
-        abort(404)
+    def index(self):
+        c.titles = [page.title for page in self.page_q.all()]
+        return render('/pages/index.mako')
 
     def delete(self, title):
         page = self.page_q.filter_by(title=title).one()
