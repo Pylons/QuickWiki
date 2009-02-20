@@ -29,7 +29,7 @@ def make_map():
                 action='edit')
     map.connect('save_page', '/pages/save/{title}', controller='pages',
                 action='save', conditions=dict(method='POST'))
-    map.connect('delete_page', '/pages/delete/{title}', controller='pages',
+    map.connect('delete_page', '/pages/delete', controller='pages',
                 action='delete')
 
     # A bonus example - the specified defaults allow visiting

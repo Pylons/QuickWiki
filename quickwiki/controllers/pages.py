@@ -49,9 +49,14 @@ class PagesController(BaseController):
         c.titles = [page.title for page in self.page_q.all()]
         return render('/pages/index.mako')
 
-    def delete(self, title):
-        page = self.page_q.filter_by(title=title).one()
-        Session.delete(page)
+    @authenticate_form
+    def delete(self):
+        titles = request.POST.getall('title')
+        pages = self.page_q.filter(Page.title.in_(titles))
+        for page in pages:
+            Session.delete(page)
         Session.commit()
-        flash('Deleted %s.' % title)
+        # flash only after a successful commit
+        for title in titles:
+            flash('Deleted %s.' % title)
         redirect_to('pages')
