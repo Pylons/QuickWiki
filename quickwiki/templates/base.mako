@@ -22,7 +22,7 @@
       ${next.body()}\
 
       <p class="footer">
-      ${self.footer(request.environ['pylons.routes_dict']['action'])}\
+        ${self.footer(request.environ['pylons.routes_dict']['action'])}\
       </p>
     </div>
   </body>
