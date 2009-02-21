@@ -1,19 +1,21 @@
 """The application's model objects"""
-import sqlalchemy as sa
-from sqlalchemy import orm
-
 import logging
 import re
 import sets
-from docutils.core import publish_parts
 
+import sqlalchemy as sa
+from docutils.core import publish_parts
 from pylons import url
+from sqlalchemy import orm
+
 from quickwiki.lib.helpers import link_to
 from quickwiki.model import meta
 
 log = logging.getLogger(__name__)
 
-SAFE_DOCUTILS = {'file_insertion_enabled': False, 'raw_enabled': False}
+# disable docutils security hazards:
+# http://docutils.sourceforge.net/docs/howto/security.html
+SAFE_DOCUTILS = dict(file_insertion_enabled=False, raw_enabled=False)
 wikiwords = re.compile(r'\b([A-Z]\w+[A-Z]+\w+)', re.UNICODE)
 
 def init_model(engine):
