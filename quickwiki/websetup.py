@@ -1,8 +1,8 @@
 """Setup the QuickWiki application"""
 import logging
 
-from quickwiki.config.environment import load_environment
 from quickwiki import model
+from quickwiki.config.environment import load_environment
 from quickwiki.model import meta
 
 log = logging.getLogger(__name__)
