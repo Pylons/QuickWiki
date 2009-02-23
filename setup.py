@@ -7,7 +7,7 @@ except ImportError:
 
 setup(
     name='QuickWiki',
-    version='0.1.6',
+    version='0.1.7',
     description='QuickWiki - Pylons 0.9.7 Tutorial application',
     author='',
     author_email='',
