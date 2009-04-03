@@ -26,7 +26,7 @@ def init_model(engine):
 
 pages_table = sa.Table('pages', meta.metadata,
     sa.Column('title', sa.types.Unicode(40), primary_key=True),
-    sa.Column('content', sa.types.Unicode(), default='')
+    sa.Column('content', sa.types.UnicodeText(), default=u'')
 )
 
 class Page(object):
