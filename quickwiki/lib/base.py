@@ -5,10 +5,10 @@ Provides the BaseController class for subclassing.
 from pylons.controllers import WSGIController
 from pylons.templating import render_mako as render
 
-from quickwiki.model import meta
+from quickwiki.model.meta import Session
 
 class BaseController(WSGIController):
-
+    
     def __call__(self, environ, start_response):
         """Invoke the Controller"""
         # WSGIController.__call__ dispatches to the Controller method
@@ -17,4 +17,6 @@ class BaseController(WSGIController):
         try:
             return WSGIController.__call__(self, environ, start_response)
         finally:
-            meta.Session.remove()
+            Session.remove()
+    
+

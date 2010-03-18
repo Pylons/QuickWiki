@@ -5,22 +5,22 @@
     <title>QuickWiki</title>
     ${h.stylesheet_link('/quick.css')}
   </head>
-
+  
   <body>
     <div class="content">
       <h1 class="main">${self.header()}</h1>
-
+      
       <% flashes = h.flash.pop_messages() %>
       % if flashes:
         % for flash in flashes:
-        <div id="flash">
+        <div class="flash">
           <span class="message">${flash}</span>
         </div>
         % endfor
       % endif
-
+      
       ${next.body()}\
-
+      
       <p class="footer">
         ${self.footer(request.environ['pylons.routes_dict']['action'])}\
       </p>

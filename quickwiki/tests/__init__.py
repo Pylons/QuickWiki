@@ -11,26 +11,28 @@ from unittest import TestCase
 
 from paste.deploy import loadapp
 from paste.script.appinstall import SetupCommand
-from pylons import config, url
+from pylons import url
 from routes.util import URLGenerator
 from webtest import TestApp
+from quickwiki.model import Page
+from quickwiki.model.meta import Session
 
 import pylons.test
 
 __all__ = ['environ', 'url', 'TestController']
 
 # Invoke websetup with the current config file
-SetupCommand('setup-app').run([config['__file__']])
+SetupCommand('setup-app').run([pylons.test.pylonsapp.config['__file__']])
 
 environ = {}
 
 class TestController(TestCase):
-
+    
     def __init__(self, *args, **kwargs):
-        if pylons.test.pylonsapp:
-            wsgiapp = pylons.test.pylonsapp
-        else:
-            wsgiapp = loadapp('config:%s' % config['__file__'])
+        wsgiapp = pylons.test.pylonsapp
+        config = wsgiapp.config
         self.app = TestApp(wsgiapp)
         url._push_object(URLGenerator(config['routes.map'], environ))
         TestCase.__init__(self, *args, **kwargs)
+    
+

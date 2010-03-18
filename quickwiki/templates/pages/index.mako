@@ -2,12 +2,12 @@
 
 <%def name="header()">Title List</%def>
 
-${h.secure_form(url('delete_page'))}
+${h.secure_form(h.url('delete_page'))}
 
 <ul id="titles">
   % for title in c.titles:
   <li>
-    ${h.link_to(title, url('show_page', title=title))} -
+    ${h.link_to(title, h.url('show_page', title=title))} -
     ${h.checkbox('title', title)}
   </li>
   % endfor

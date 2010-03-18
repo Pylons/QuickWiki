@@ -29,6 +29,6 @@ a:hover {
   text-decoration: underline;
 }
 
-div#flash .message {
+div.flash span.message {
   color: orangered;
 }

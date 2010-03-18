@@ -7,15 +7,15 @@ except ImportError:
 
 setup(
     name='QuickWiki',
-    version='0.1.7',
-    description='QuickWiki - Pylons 0.9.7 Tutorial application',
+    version='0.1.8',
+    description='QuickWiki - Pylons 1.0 Tutorial application',
     author='',
     author_email='',
-    url='http://pylonshq.com/docs/en/0.9.7/tutorials/quickwiki_tutorial/',
+    url='http://pylonshq.com/docs/en/1.0/tutorials/quickwiki_tutorial/',
     install_requires=[
-        "Pylons>=0.9.7",
+        "Pylons==1.0rc1dev-20100318",
         "SQLAlchemy>=0.5",
-        "docutils==0.4"
+        "docutils==0.6",
     ],
     setup_requires=["PasteScript>=1.6.3"],
     packages=find_packages(exclude=['ez_setup']),
@@ -31,7 +31,7 @@ setup(
     entry_points="""
     [paste.app_factory]
     main = quickwiki.config.middleware:make_app
-
+    
     [paste.app_install]
     main = pylons.util:PylonsInstaller
     """,
